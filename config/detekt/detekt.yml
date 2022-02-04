@@ -1,0 +1,8 @@
+build:
+  maxIssues: 10
+  excludeCorrectable: false
+  weights:
+    complexity: 2
+    LongParameterList: 1
+    style: 1
+    comments: 1
