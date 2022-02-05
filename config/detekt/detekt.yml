@@ -6,3 +6,19 @@ build:
     LongParameterList: 1
     style: 1
     comments: 1
+
+complexity:
+  LongParameterList:
+    functionThreshold: 20
+    ignoreDefaultParameters: true
+
+naming:
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable', 'Preview' ]
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][A-Za-z0-9]*'
+
+style:
+  MagicNumber:
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true

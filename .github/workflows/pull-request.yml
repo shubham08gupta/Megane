@@ -1,0 +1,18 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  detekt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v2
+
+      - name: "detekt all"
+        uses: natiginfo/action-detekt-all@1.19.0
+        with:
+          args: detekt --build-upon-default-config --all-rules --config config/detekt/detekt.yml
