@@ -15,4 +15,4 @@ jobs:
       - name: "detekt all"
         uses: natiginfo/action-detekt-all@1.19.0
         with:
-          args: detekt --build-upon-default-config --all-rules --config config/detekt/detekt.yml
+          args: --build-upon-default-config --all-rules --config config/detekt/detekt.yml
