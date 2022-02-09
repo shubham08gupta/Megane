@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -39,7 +39,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -47,7 +46,6 @@ fun DefaultPreview() {
         MainScreenView()
     }
 }
-
 
 @Composable
 fun NavigationGraph(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -67,11 +65,11 @@ fun BottomNavigationBar(navController: NavController) {
         BottomNavItem.Home,
         BottomNavItem.Account,
     )
-    BottomNavigation {
+    NavigationBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         items.forEach { screen ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = {
                     Icon(
                         painter = painterResource(id = screen.icon),
