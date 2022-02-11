@@ -1,4 +1,4 @@
-package com.oss.megane.navigation
+package com.oss.megane.ui.account
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,23 +14,6 @@ import androidx.compose.ui.unit.sp
 import com.oss.megane.ui.theme.MeganeTheme
 
 @Composable
-fun HomeScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        Text(
-            text = "Home",
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-    }
-}
-
-@Composable
 fun AccountScreen() {
     Column(
         modifier = Modifier
@@ -44,14 +27,6 @@ fun AccountScreen() {
             textAlign = TextAlign.Center,
             fontSize = 20.sp
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    MeganeTheme {
-        HomeScreen()
     }
 }
 
