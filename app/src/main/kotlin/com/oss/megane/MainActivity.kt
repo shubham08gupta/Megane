@@ -21,7 +21,9 @@ import com.oss.megane.navigation.NavigationGraph
 import com.oss.megane.ui.theme.MeganeTheme
 import com.oss.megane.ui.util.WindowSize
 import com.oss.megane.ui.util.rememberWindowSizeClass
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
