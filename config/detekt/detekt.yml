@@ -22,3 +22,7 @@ style:
   MagicNumber:
     ignorePropertyDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
