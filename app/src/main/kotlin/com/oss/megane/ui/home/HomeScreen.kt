@@ -2,33 +2,99 @@ package com.oss.megane.ui.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.mvrx.Fail
+import com.airbnb.mvrx.Loading
+import com.airbnb.mvrx.Success
+import com.airbnb.mvrx.Uninitialized
+import com.airbnb.mvrx.compose.mavericksViewModel
+import com.megane.model.Movie
+import com.oss.megane.model.HomeScreenState
 import com.oss.megane.ui.theme.MeganeTheme
 import com.oss.megane.ui.util.WindowSize
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(windowSize: WindowSize) {
-    when (windowSize) {
-        WindowSize.Compact -> MovieList(itemsPerRow = 3)
-        WindowSize.Medium -> MovieList(itemsPerRow = 4)
-        WindowSize.Expanded -> MovieList(itemsPerRow = 6)
+    val viewModel: HomeViewModel = mavericksViewModel()
+    val state =
+        viewModel.stateFlow.collectAsState(initial = HomeScreenState())
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    when (state.value.state) {
+        Uninitialized -> {
+            /*do nothing*/
+        }
+        is Loading -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center)
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        is Success -> {
+            val data = state.value.state.invoke()!!
+            when (windowSize) {
+                WindowSize.Compact -> MovieList(data, itemsPerRow = 3)
+                WindowSize.Medium -> MovieList(data, itemsPerRow = 4)
+                WindowSize.Expanded -> MovieList(data, itemsPerRow = 6)
+            }
+        }
+        is Fail -> {
+            val exception = (state.value.state as Fail<List<Movie>>).error
+            Scaffold(
+                snackbarHost = {
+                    SnackbarHost(
+                        hostState = snackbarHostState
+                    )
+                },
+                content = { innerPadding ->
+                    Text(
+                        text = "Nothing to display",
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .wrapContentSize()
+                    )
+                }
+            )
+            scope.launch {
+                snackbarHostState.showSnackbar(exception.message ?: "Unknown")
+            }
+        }
     }
+
 }
 
 @Composable
-fun MovieList(modifier: Modifier = Modifier, itemsPerRow: Int) {
+fun MovieList(movies: List<Movie>, itemsPerRow: Int, modifier: Modifier = Modifier) {
     LazyVerticalGrid(
         modifier = modifier.statusBarsPadding(),
         columns = GridCells.Fixed(itemsPerRow),
@@ -36,20 +102,20 @@ fun MovieList(modifier: Modifier = Modifier, itemsPerRow: Int) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(count = 6) {
-            MovieItem()
+        items(items = movies) { movie ->
+            MovieItem(movie.title)
         }
     }
 }
 
 @Composable
-fun MovieItem() {
+fun MovieItem(title: String) {
     Card(
         modifier = Modifier
             .width(120.dp)
             .height(150.dp)
     ) {
-        Text(text = "Don't Look Up")
+        Text(text = title)
     }
 }
 
