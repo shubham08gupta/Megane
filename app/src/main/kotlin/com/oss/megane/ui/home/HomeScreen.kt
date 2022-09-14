@@ -1,6 +1,7 @@
 package com.oss.megane.ui.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -103,19 +104,24 @@ fun MovieList(movies: List<Movie>, itemsPerRow: Int, modifier: Modifier = Modifi
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items = movies) { movie ->
-            MovieItem(movie.title)
+            MovieItem(movie) {
+
+            }
         }
     }
 }
 
 @Composable
-fun MovieItem(title: String) {
+fun MovieItem(movie: Movie, onMovieClicked: (Movie) -> Unit) {
     Card(
         modifier = Modifier
             .width(120.dp)
             .height(150.dp)
+            .clickable {
+                onMovieClicked(movie)
+            }
     ) {
-        Text(text = title)
+        Text(text = movie.title, modifier = Modifier.padding(8.dp))
     }
 }
 
