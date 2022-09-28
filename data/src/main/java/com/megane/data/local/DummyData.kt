@@ -4,6 +4,7 @@ import com.megane.model.Movie
 
 val moviesList = listOf(
     Movie(
+        id = "1",
         title = "Doctor Strange in the Multiverse of Madness",
         description = "Doctor Strange, with the help of mystical allies both old and new, " +
                 "traverses the mind-bending and dangerous alternate realities of the Multiverse to " +
@@ -11,6 +12,7 @@ val moviesList = listOf(
         posterPath = "/61PVJ06oecwvcBisoAQu6SDfdcS.jpg"
     ),
     Movie(
+        id = "2",
         title = "Fantastic Beasts: The Secrets of Dumbledore",
         description = "Professor Albus Dumbledore knows the powerful, dark wizard Gellert " +
                 "Grindelwald is moving to seize control of the wizarding world. Unable to stop" +
@@ -20,6 +22,7 @@ val moviesList = listOf(
         posterPath = "/jrgifaYeUtTnaH7NF5Drkgjg2MB.jpg"
     ),
     Movie(
+        id = "3",
         title = "Sonic the Hedgehog 2",
         description = "After settling in Green Hills, Sonic is eager to prove he has what it" +
                 " takes to be a true hero. His test comes when Dr. Robotnik returns, this time" +
@@ -30,11 +33,11 @@ val moviesList = listOf(
         posterPath = "/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg"
     ),
     Movie(
+        id = "4",
         title = "Minions: The Rise of Gru",
         description = "A fanboy of a supervillain supergroup known as the Vicious 6, Gru hatches" +
                 " a plan to become evil enough to join them, with the backup of his followers," +
                 " the Minions.",
         posterPath = "/wKiOkZTN9lUUUNZLmtnwubZYONg.jpg"
     ),
-
-    )
+)

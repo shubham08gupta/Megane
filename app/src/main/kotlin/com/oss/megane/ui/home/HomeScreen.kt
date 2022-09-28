@@ -41,7 +41,7 @@ import com.oss.megane.ui.util.WindowSize
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(windowSize: WindowSize) {
+fun HomeScreen(windowSize: WindowSize, onMovieClicked: (movieId: String) -> Unit) {
     val viewModel: HomeViewModel = mavericksViewModel()
     val state =
         viewModel.stateFlow.collectAsState(initial = HomeScreenState())
@@ -63,9 +63,9 @@ fun HomeScreen(windowSize: WindowSize) {
         is Success -> {
             val data = state.value.state.invoke()!!
             when (windowSize) {
-                WindowSize.Compact -> MovieList(data, itemsPerRow = 3)
-                WindowSize.Medium -> MovieList(data, itemsPerRow = 4)
-                WindowSize.Expanded -> MovieList(data, itemsPerRow = 6)
+                WindowSize.Compact -> MovieList(data, itemsPerRow = 3) { onMovieClicked(it) }
+                WindowSize.Medium -> MovieList(data, itemsPerRow = 4) { onMovieClicked(it) }
+                WindowSize.Expanded -> MovieList(data, itemsPerRow = 6) { onMovieClicked(it) }
             }
         }
         is Fail -> {
@@ -95,7 +95,12 @@ fun HomeScreen(windowSize: WindowSize) {
 }
 
 @Composable
-fun MovieList(movies: List<Movie>, itemsPerRow: Int, modifier: Modifier = Modifier) {
+fun MovieList(
+    movies: List<Movie>,
+    itemsPerRow: Int,
+    modifier: Modifier = Modifier,
+    onMovieClicked: (String) -> Unit
+) {
     LazyVerticalGrid(
         modifier = modifier.statusBarsPadding(),
         columns = GridCells.Fixed(itemsPerRow),
@@ -105,7 +110,7 @@ fun MovieList(movies: List<Movie>, itemsPerRow: Int, modifier: Modifier = Modifi
     ) {
         items(items = movies) { movie ->
             MovieItem(movie) {
-
+                onMovieClicked(it.id)
             }
         }
     }
@@ -143,6 +148,6 @@ fun MovieItem(movie: Movie, onMovieClicked: (Movie) -> Unit) {
 @Composable
 fun HomeScreenPreview() {
     MeganeTheme {
-        HomeScreen(WindowSize.Medium)
+        HomeScreen(WindowSize.Medium) { }
     }
 }
