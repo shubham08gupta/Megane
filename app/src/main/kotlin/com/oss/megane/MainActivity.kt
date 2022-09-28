@@ -16,7 +16,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.oss.megane.navigation.BottomNavigationBar
-import com.oss.megane.navigation.NavigationGraph
+import com.oss.megane.navigation.RootNavigationGraph
 import com.oss.megane.ui.theme.MeganeTheme
 import com.oss.megane.ui.util.WindowSize
 import com.oss.megane.ui.util.rememberWindowSizeClass
@@ -62,7 +62,7 @@ fun MainScreenView(
                 )
             }
         ) { innerPadding ->
-            NavigationGraph(
+            RootNavigationGraph(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
                 windowSize = windowSize
