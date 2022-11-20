@@ -1,6 +1,8 @@
 package com.oss.megane
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -27,6 +29,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        Log.e("Shubham", "${Resources.getSystem().configuration.locales}")
+        Log.e("Shubham", Resources.getSystem().configuration.locales[0].script)
+//        Locale.getAvailableLocales().map {
+//            Log.e("Shubham", "${it.country} ${it.displayCountry} ")
+//        }
 
         setContent {
             val windowSizeClass = rememberWindowSizeClass()
